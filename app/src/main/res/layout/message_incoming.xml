@@ -2,20 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="chat"
-            type="com.example.chatbot.models.Message" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:paddingVertical="10dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="60dp">
+        android:paddingVertical="14dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="50dp">
 
         <TextView
             android:id="@+id/tvName"
@@ -29,28 +22,43 @@
             app:layout_constraintStart_toEndOf="@+id/ivProfileOther"
             app:layout_constraintTop_toTopOf="@+id/ivProfileOther" />
 
+
         <TextView
             android:id="@+id/tvBody"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvName"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="4dp"
             android:background="@drawable/message_incoming"
             android:elevation="2dp"
             android:paddingHorizontal="16dp"
             android:paddingVertical="12dp"
             android:text="@{chat.message}"
-            android:textSize="18sp"
+            android:textColor="#8d8d8d"
+            android:textSize="16sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivProfileOther"
-            app:layout_constraintTop_toBottomOf="@+id/tvName" />
-
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            app:layout_constraintWidth_default="wrap" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivProfileOther"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:contentDescription="@string/profile_other"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/ic_robot"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+
+        <variable
+            name="chat"
+            type="com.example.chatbot.models.Message" />
+    </data>
 </layout>

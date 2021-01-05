@@ -1,11 +1,17 @@
 package com.example.chatbot.ui;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.example.chatbot.R;
 import com.example.chatbot.adapters.ChatRvAdapter;
@@ -53,8 +59,23 @@ public class ChatListFragment extends Fragment {
 
     private void initView(View view) {
         chatListBinding.btSend.setOnClickListener(v -> {
-            if (!chatListBinding.etMessage.getText().toString().isEmpty())
+            if (!chatListBinding.etMessage.getText().toString().isEmpty()) {
                 chatListViewModel.sendMessage(chatListBinding.etMessage.getText().toString());
+                chatListBinding.etMessage.setText("");
+            }
+        });
+
+        chatListBinding.etMessage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_SEND)) {
+                    if (!chatListBinding.etMessage.getText().toString().isEmpty()) {
+                        chatListViewModel.sendMessage(chatListBinding.etMessage.getText().toString());
+                        chatListBinding.etMessage.setText("");
+                    }
+                }
+                return false;
+            }
         });
 
         chatListBinding.etMessage.addTextChangedListener(new TextWatcher() {
@@ -65,7 +86,13 @@ public class ChatListFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if (s.length() > 0) {
+                    PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(Color.parseColor("#52c7b8"), PorterDuff.Mode.SRC_ATOP);
+                    chatListBinding.btSend.setColorFilter(porterDuffColorFilter);
+                } else {
+                    PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(Color.parseColor("#cfcfcf"), PorterDuff.Mode.SRC_ATOP);
+                    chatListBinding.btSend.setColorFilter(porterDuffColorFilter);
+                }
             }
 
             @Override

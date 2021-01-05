@@ -16,19 +16,22 @@
             android:hint="@string/message_hint"
             android:imeOptions="actionSend"
             android:inputType="textShortMessage"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btSend"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rvChat" />
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/send"
             android:gravity="center"
+            android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:src="@drawable/ic_baseline_send_24"
             android:textSize="18sp"
@@ -42,12 +45,10 @@
             android:id="@+id/rvChat"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/etMessage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
