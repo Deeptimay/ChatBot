@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="chat"
+            type="com.example.chatbot.models.Message" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingVertical="10dp"
+        android:paddingStart="60dp"
+        android:paddingEnd="15dp">
+
+        <TextView
+            android:id="@+id/tvBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/message_outgoing"
+            android:elevation="2dp"
+            android:padding="8dp"
+            android:text="@{chat.message}"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/ivProfileMe"
+            app:layout_constraintTop_toTopOf="@+id/ivProfileMe" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivProfileMe"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:contentDescription="@string/profile_me"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

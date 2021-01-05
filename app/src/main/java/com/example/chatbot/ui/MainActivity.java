@@ -1,9 +1,14 @@
-package com.example.chatbot;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.chatbot.ui;
 
 import android.os.Bundle;
 
+
+import com.example.chatbot.R;
+
+import androidx.appcompat.app.AppCompatActivity;
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     @Override

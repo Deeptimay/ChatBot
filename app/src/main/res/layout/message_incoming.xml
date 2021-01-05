@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="chat"
+            type="com.example.chatbot.models.Message" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingVertical="10dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="60dp">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/ivProfileOther"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/ivProfileOther"
+            android:paddingBottom="4dp"
+            android:text="@{chat.chatBotName}"
+            app:layout_constraintStart_toEndOf="@+id/ivProfileOther"
+            app:layout_constraintTop_toTopOf="@+id/ivProfileOther" />
+
+        <TextView
+            android:id="@+id/tvBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvName"
+            android:background="@drawable/message_incoming"
+            android:elevation="2dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:text="@{chat.message}"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/ivProfileOther"
+            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivProfileOther"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:contentDescription="@string/profile_other"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
