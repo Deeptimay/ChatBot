@@ -17,8 +17,8 @@ public interface MessageDao {
     @Query("SELECT * FROM message ORDER BY id DESC")
     LiveData<List<Message>> getAll();
 
-    @Query("SELECT * FROM message WHERE chatBotName LIKE :name LIMIT 1")
-    Message findByName(String name);
+    @Query("SELECT * FROM message WHERE chatBotName LIKE :name AND isSynced=:flag")
+    List<Message> findUnSyncedMessages(String name, boolean flag);
 
     @Insert
     void insertAll(List<Message> messageList);

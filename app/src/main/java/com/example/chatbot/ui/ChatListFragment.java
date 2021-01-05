@@ -1,8 +1,10 @@
 package com.example.chatbot.ui;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +19,7 @@ import com.example.chatbot.R;
 import com.example.chatbot.adapters.ChatRvAdapter;
 import com.example.chatbot.databinding.FragmentChatListBinding;
 import com.example.chatbot.models.Message;
+import com.example.chatbot.offlineSyncUtility.ConnectionStateMonitor;
 import com.example.chatbot.viewmodels.ChatListViewModel;
 
 import java.util.ArrayList;
@@ -42,6 +45,7 @@ public class ChatListFragment extends Fragment {
     @Inject
     ChatListViewModel chatListViewModel;
     FragmentChatListBinding chatListBinding;
+    ConnectionStateMonitor connectionStateMonitor;
 
     @Nullable
     @Override
@@ -55,6 +59,7 @@ public class ChatListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         chatListViewModel = ViewModelProviders.of(this).get(ChatListViewModel.class);
         initView(view);
+        connectionStateMonitor = new ConnectionStateMonitor();
     }
 
     private void initView(View view) {
@@ -123,5 +128,18 @@ public class ChatListFragment extends Fragment {
         chatListBinding.rvChat.setLayoutManager(mLayoutManager);
         chatListBinding.rvChat.setItemAnimator(new DefaultItemAnimator());
         chatListBinding.rvChat.setAdapter(chatRvAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        connectionStateMonitor.enable(getContext());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        connectivityManager.unregisterNetworkCallback(connectionStateMonitor);
     }
 }
