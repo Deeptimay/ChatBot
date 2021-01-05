@@ -21,5 +21,9 @@ public class OutgoingMessageViewHolder extends MessageViewHolder {
     @Override
     public void bindMessage(Message message) {
         body.setText(message.getMessage());
+        if (message.getSynced())
+            body.setBackgroundResource(R.drawable.message_outgoing);
+        else
+            body.setBackgroundResource(R.drawable.message_outgoing_unsynced);
     }
 }

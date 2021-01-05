@@ -6,40 +6,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/etMessage"
+        <RelativeLayout
+            android:id="@+id/rl_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:hint="@string/message_hint"
-            android:imeOptions="actionSend"
-            android:inputType="textShortMessage"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btSend"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvChat" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:contentDescription="@string/send"
-            android:gravity="center"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:src="@drawable/ic_baseline_send_24"
-            android:textSize="18sp"
+            android:layout_margin="4dp"
+            android:background="@drawable/message_type_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/etMessage"
-            app:layout_constraintTop_toTopOf="@+id/etMessage" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:id="@+id/etMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_toStartOf="@+id/btSend"
+                android:hint="@string/message_hint"
+                android:imeOptions="actionSend"
+                android:inputType="textShortMessage"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:textColor="#8d8d8d"
+                android:textColorHint="#8d8d8d" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/send"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:src="@drawable/ic_baseline_send_24"
+                android:textSize="18sp" />
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvChat"
@@ -47,7 +53,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/etMessage"
+            app:layout_constraintBottom_toTopOf="@+id/rl_message"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
