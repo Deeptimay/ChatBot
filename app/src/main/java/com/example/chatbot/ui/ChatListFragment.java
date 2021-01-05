@@ -52,7 +52,10 @@ public class ChatListFragment extends Fragment {
     }
 
     private void initView(View view) {
-        chatListBinding.btSend.setOnClickListener(v -> { });
+        chatListBinding.btSend.setOnClickListener(v -> {
+            if (!chatListBinding.etMessage.getText().toString().isEmpty())
+                chatListViewModel.sendMessage(chatListBinding.etMessage.getText().toString());
+        });
 
         chatListBinding.etMessage.addTextChangedListener(new TextWatcher() {
             @Override
@@ -80,6 +83,7 @@ public class ChatListFragment extends Fragment {
             @Override
             public void onChanged(List<Message> messages) {
                 chatRvAdapter.swapData(messages);
+                chatListBinding.rvChat.scrollToPosition(0);
             }
         });
     }
@@ -88,6 +92,7 @@ public class ChatListFragment extends Fragment {
         List<Message> messageList = new ArrayList<>();
         chatRvAdapter = new ChatRvAdapter(messageList);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(ChatListFragment.this.getContext());
+        mLayoutManager.setReverseLayout(true);
         chatListBinding.rvChat.setLayoutManager(mLayoutManager);
         chatListBinding.rvChat.setItemAnimator(new DefaultItemAnimator());
         chatListBinding.rvChat.setAdapter(chatRvAdapter);

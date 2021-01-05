@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class RetrofitClient {
 
-    private static final String API_URL = "http://www.personalityforge.com/api/chat/";
+    private static final String API_URL = "http://www.personalityforge.com";
     private static final Object sLock = new Object();
     private static final OkHttpClient client;
 

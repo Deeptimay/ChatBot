@@ -9,6 +9,6 @@ import retrofit2.http.Query;
 
 public interface FetchBotResponseService {
 
-    @GET
+    @GET("/api/chat/")
     Call<ChatBotResponse> getBotResponse(@Query("message") String message);
 }

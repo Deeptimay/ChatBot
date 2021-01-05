@@ -32,17 +32,11 @@ public class ChatRvAdapter extends RecyclerView.Adapter<ChatRvAdapter.MessageVie
 
     @Override
     public int getItemViewType(int position) {
-        if (isMe(position)) {
+        if (mMessages.get(position).getChatBotName().equalsIgnoreCase("Deeptimay")) {
             return MESSAGE_OUTGOING;
         } else {
             return MESSAGE_INCOMING;
         }
-    }
-
-    private boolean isMe(int position) {
-        Message message = mMessages.get(position);
-//        return message.getUserId() != null && message.getUserId().equals(mUserId);
-        return true;
     }
 
     @NotNull
@@ -75,6 +69,7 @@ public class ChatRvAdapter extends RecyclerView.Adapter<ChatRvAdapter.MessageVie
 
     public void swapData(List<Message> items) {
         if (items != null) {
+            mMessages.clear();
             mMessages.addAll(items);
         } else {
             mMessages = null;
