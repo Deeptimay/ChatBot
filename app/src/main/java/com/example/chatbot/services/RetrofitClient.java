@@ -40,7 +40,6 @@ public class RetrofitClient {
 
             HttpUrl url = originalHttpUrl.newBuilder()
                     .addQueryParameter("apiKey", "6nt5d1nJHkqbkphe")
-                    .addQueryParameter("externalID", "Deeptimay")
                     .addQueryParameter("chatBotID", "63906")
                     .build();
 
@@ -82,11 +81,5 @@ public class RetrofitClient {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
-    }
-
-    private static boolean isInternetAvailable() {
-        ConnectivityManager cm = (ConnectivityManager) MyApplication.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 }

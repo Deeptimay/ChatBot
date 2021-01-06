@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.hilt.work.WorkerInject;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 import retrofit2.Call;
@@ -21,6 +22,7 @@ import retrofit2.Response;
 public class SyncWorker extends Worker {
     private static final String TAG = "SyncWorker";
 
+    @WorkerInject
     public SyncWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
     }

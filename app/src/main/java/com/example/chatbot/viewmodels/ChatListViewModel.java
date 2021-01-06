@@ -9,6 +9,7 @@ import com.example.chatbot.repository.ChatRepository;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import dagger.hilt.android.scopes.ActivityRetainedScoped;
@@ -24,6 +25,7 @@ public class ChatListViewModel extends AndroidViewModel {
     private LiveData<List<Message>> messageListLiveDataJulie;
     private LiveData<List<Message>> messageListLiveDataDave;
 
+    @ViewModelInject
     public ChatListViewModel(@NonNull Application application) {
         super(application);
         chatRepository = ChatRepository.getInstance();

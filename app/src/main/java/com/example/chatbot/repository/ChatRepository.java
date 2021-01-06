@@ -9,6 +9,8 @@ import com.example.chatbot.services.RetrofitClient;
 
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import androidx.lifecycle.LiveData;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -16,6 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@Singleton
 public class ChatRepository {
 
     private static final String TAG = "ChatRepository";
@@ -35,6 +38,7 @@ public class ChatRepository {
         messageListLiveDataDave = messageDao.getAll("Dave");
     }
 
+    @Singleton
     public static ChatRepository getInstance() {
         if (instance == null) {
             instance = new ChatRepository();

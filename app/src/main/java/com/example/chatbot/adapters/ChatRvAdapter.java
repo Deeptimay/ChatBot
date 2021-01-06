@@ -12,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +23,7 @@ public class ChatRvAdapter extends RecyclerView.Adapter<ChatRvAdapter.MessageVie
     private static final int MESSAGE_INCOMING = 321;
     private List<Message> mMessages;
 
+    @Inject
     public ChatRvAdapter(List<Message> messages) {
         mMessages = messages;
     }
