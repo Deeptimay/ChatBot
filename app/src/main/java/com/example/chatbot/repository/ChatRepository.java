@@ -80,12 +80,15 @@ public class ChatRepository {
                 Observable.just("io")
                         .subscribeOn(Schedulers.io())
                         .subscribe(i -> {
-                            Message messageResponse = response.body().getMessage();
-                            messageResponse.setExternalID(message.getExternalID());
+                            try {
+                                Message messageResponse = response.body().getMessage();
+                                messageResponse.setExternalID(message.getExternalID());
 
-                            messageDao.insert(messageResponse);
-                            message.setSynced(true);
-                            messageDao.update(message);
+                                messageDao.insert(messageResponse);
+                                message.setSynced(true);
+                                messageDao.update(message);
+                            } catch (Exception e) {
+                            }
                         });
 
             }
