@@ -1,10 +1,8 @@
 package com.example.chatbot.ui;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,7 +17,6 @@ import com.example.chatbot.R;
 import com.example.chatbot.adapters.ChatRvAdapter;
 import com.example.chatbot.databinding.FragmentChatListBinding;
 import com.example.chatbot.models.Message;
-import com.example.chatbot.offlineSyncUtility.ConnectionStateMonitor;
 import com.example.chatbot.viewmodels.ChatListViewModel;
 
 import java.util.ArrayList;
@@ -38,14 +35,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import dagger.hilt.android.scopes.FragmentScoped;
 
 @FragmentScoped
-public class ChatListFragment extends Fragment {
+public class ChatListFragmentJulie extends Fragment {
 
     @Inject
     ChatRvAdapter chatRvAdapter;
     @Inject
     ChatListViewModel chatListViewModel;
     FragmentChatListBinding chatListBinding;
-    ConnectionStateMonitor connectionStateMonitor;
+    String externalID = "Julie";
 
     @Nullable
     @Override
@@ -59,14 +56,12 @@ public class ChatListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         chatListViewModel = ViewModelProviders.of(this).get(ChatListViewModel.class);
         initView(view);
-        connectionStateMonitor = new ConnectionStateMonitor();
     }
 
     private void initView(View view) {
         chatListBinding.btSend.setOnClickListener(v -> {
             if (!chatListBinding.etMessage.getText().toString().isEmpty()) {
-                chatListViewModel.sendMessage(chatListBinding.etMessage.getText().toString());
-                chatListBinding.etMessage.setText("");
+                postMessage(chatListBinding.etMessage.getText().toString());
             }
         });
 
@@ -75,8 +70,7 @@ public class ChatListFragment extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_SEND)) {
                     if (!chatListBinding.etMessage.getText().toString().isEmpty()) {
-                        chatListViewModel.sendMessage(chatListBinding.etMessage.getText().toString());
-                        chatListBinding.etMessage.setText("");
+                        postMessage(chatListBinding.etMessage.getText().toString());
                     }
                 }
                 return false;
@@ -111,7 +105,7 @@ public class ChatListFragment extends Fragment {
     }
 
     private void subscribeObservers() {
-        chatListViewModel.getMessages().observe(getViewLifecycleOwner(), new Observer<List<Message>>() {
+        chatListViewModel.getMessagesForJulie().observe(getViewLifecycleOwner(), new Observer<List<Message>>() {
             @Override
             public void onChanged(List<Message> messages) {
                 chatRvAdapter.swapData(messages);
@@ -123,23 +117,20 @@ public class ChatListFragment extends Fragment {
     private void initRecyclerView() {
         List<Message> messageList = new ArrayList<>();
         chatRvAdapter = new ChatRvAdapter(messageList);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(ChatListFragment.this.getContext());
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(ChatListFragmentJulie.this.getContext());
         mLayoutManager.setReverseLayout(true);
         chatListBinding.rvChat.setLayoutManager(mLayoutManager);
         chatListBinding.rvChat.setItemAnimator(new DefaultItemAnimator());
         chatListBinding.rvChat.setAdapter(chatRvAdapter);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        connectionStateMonitor.enable(getContext());
-    }
+    private void postMessage(String message) {
+        Message messageObj = new Message(message);
+        messageObj.setSynced(false);
+        messageObj.setChatBotName("myself");
+        messageObj.setExternalID(externalID);
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        connectivityManager.unregisterNetworkCallback(connectionStateMonitor);
+        chatListViewModel.sendMessage(messageObj);
+        chatListBinding.etMessage.setText("");
     }
 }

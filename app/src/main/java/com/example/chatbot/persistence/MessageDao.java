@@ -14,11 +14,11 @@ import androidx.room.Update;
 @Dao
 public interface MessageDao {
 
-    @Query("SELECT * FROM message ORDER BY id DESC")
-    LiveData<List<Message>> getAll();
+    @Query("SELECT * FROM message WHERE externalID=:id ORDER BY id DESC")
+    LiveData<List<Message>> getAll(String id);
 
-    @Query("SELECT * FROM message WHERE chatBotName LIKE :name AND isSynced=:flag")
-    List<Message> findUnSyncedMessages(String name, boolean flag);
+    @Query("SELECT * FROM message WHERE isSynced=:flag")
+    List<Message> findUnSyncedMessages(boolean flag);
 
     @Insert
     void insertAll(List<Message> messageList);

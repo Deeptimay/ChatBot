@@ -8,4 +8,18 @@
     <string name="your_outgoing_message_here">Your outgoing message here</string>
     <string name="johny_lindsey">Johny Lindsey</string>
     <string name="someone_else_s_message">Someone else\'s message</string>
+    <string name="mr_chat_bot">Mr. Chat Bot</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

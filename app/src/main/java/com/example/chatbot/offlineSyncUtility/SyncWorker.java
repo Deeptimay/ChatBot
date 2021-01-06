@@ -29,15 +29,17 @@ public class SyncWorker extends Worker {
     @Override
     public Result doWork() {
         MessageDao messageDao = MessageDatabase.getInstance(MyApplication.getInstance()).getMessageDao();
-        List<Message> messageList = messageDao.findUnSyncedMessages("Deeptimay", false);
+        List<Message> messageList = messageDao.findUnSyncedMessages(false);
 
         for (Message message : messageList) {
-            Call<ChatBotResponse> call = RetrofitClient.getInstance().getBotResponse(message.getMessage());
+            Call<ChatBotResponse> call = RetrofitClient.getInstance().getBotResponse(message.getMessage(), message.getExternalID());
             Response<ChatBotResponse> response = null;
             try {
                 response = call.execute();
                 if (response.code() == 200) {
-                    messageDao.insert(response.body().getMessage());
+                    Message messageResponse = response.body().getMessage();
+                    messageResponse.setExternalID(message.getExternalID());
+                    messageDao.insert(messageResponse);
                     message.setSynced(true);
                     messageDao.update(message);
                 } else {

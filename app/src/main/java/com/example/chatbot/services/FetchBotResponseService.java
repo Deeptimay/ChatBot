@@ -10,5 +10,5 @@ import retrofit2.http.Query;
 public interface FetchBotResponseService {
 
     @GET("/api/chat/")
-    Call<ChatBotResponse> getBotResponse(@Query("message") String message);
+    Call<ChatBotResponse> getBotResponse(@Query("message") String message, @Query("externalID") String externalID);
 }

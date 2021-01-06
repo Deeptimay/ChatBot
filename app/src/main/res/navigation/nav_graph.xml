@@ -7,11 +7,27 @@
     app:exitAnim="@anim/slide_out_left"
     app:popEnterAnim="@anim/slide_in_left"
     app:popExitAnim="@anim/slide_out_right"
-    app:startDestination="@id/userListFragment">
+    app:startDestination="@id/ChatListFragmentDeeptimay">
 
     <fragment
-        android:id="@+id/userListFragment"
-        android:name="com.example.chatbot.ui.ChatListFragment"
-        android:label="UserListFragment"
-        tools:layout="@layout/fragment_chat_list"/>
+        android:id="@+id/ChatListFragmentDeeptimay"
+        android:name="com.example.chatbot.ui.ChatListFragmentDeeptimay"
+        android:label="Deeptimay"
+        tools:layout="@layout/fragment_chat_list" />
+    <fragment
+        android:id="@+id/chatListFragmentChris"
+        android:name="com.example.chatbot.ui.ChatListFragmentChris"
+        android:label="Chris"
+        tools:layout="@layout/fragment_chat_list" />
+    <fragment
+        android:id="@+id/chatListFragmentJulie"
+        android:name="com.example.chatbot.ui.ChatListFragmentJulie"
+        android:label="Julie"
+        tools:layout="@layout/fragment_chat_list" />
+    <fragment
+        android:id="@+id/chatListFragmentDave"
+        android:name="com.example.chatbot.ui.ChatListFragmentDave"
+        android:label="Dave"
+        tools:layout="@layout/fragment_chat_list" />
+
 </navigation>

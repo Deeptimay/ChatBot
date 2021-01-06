@@ -44,6 +44,9 @@ public class Message implements Parcelable {
     @SerializedName("emotion")
     @Expose
     private String emotion;
+    @SerializedName("externalID")
+    @Expose
+    private String externalID;
 
     public Message(String message) {
         this.message = message;
@@ -62,6 +65,14 @@ public class Message implements Parcelable {
             chatBotID = in.readInt();
         }
         message = in.readString();
+    }
+
+    public String getExternalID() {
+        return externalID;
+    }
+
+    public void setExternalID(String externalID) {
+        this.externalID = externalID;
     }
 
     public Boolean getSynced() {

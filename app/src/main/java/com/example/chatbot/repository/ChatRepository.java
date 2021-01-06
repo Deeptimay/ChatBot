@@ -20,12 +20,19 @@ public class ChatRepository {
 
     private static final String TAG = "ChatRepository";
     private static ChatRepository instance;
-    private LiveData<List<Message>> messageListLiveData;
     private MessageDao messageDao;
+
+    private LiveData<List<Message>> messageListLiveDataDeeptimay;
+    private LiveData<List<Message>> messageListLiveDataChris;
+    private LiveData<List<Message>> messageListLiveDataJulie;
+    private LiveData<List<Message>> messageListLiveDataDave;
 
     private ChatRepository() {
         messageDao = MessageDatabase.getInstance(MyApplication.getInstance()).getMessageDao();
-        messageListLiveData = messageDao.getAll();
+        messageListLiveDataDeeptimay = messageDao.getAll("Deeptimay");
+        messageListLiveDataChris = messageDao.getAll("Chris");
+        messageListLiveDataJulie = messageDao.getAll("Julie");
+        messageListLiveDataDave = messageDao.getAll("Dave");
     }
 
     public static ChatRepository getInstance() {
@@ -35,26 +42,33 @@ public class ChatRepository {
         return instance;
     }
 
-    public LiveData<List<Message>> getMessageListLiveData() {
-//        return Transformations.distinctUntilChanged(messageListLiveData);
-        return messageListLiveData;
+    public LiveData<List<Message>> getMessageListLiveData(String externalID) {
+        switch (externalID) {
+            case "Deeptimay":
+                return messageListLiveDataDeeptimay;
+            case "Chris":
+                return messageListLiveDataChris;
+            case "Julie":
+                return messageListLiveDataJulie;
+            case "Dave":
+                return messageListLiveDataDave;
+            default:
+                return null;
+        }
     }
 
 
-    public void sendMessage(String message) {
+    public void sendMessage(Message message) {
         Observable.just("io")
                 .subscribeOn(Schedulers.io())
                 .subscribe(i -> syncAndSaveMessage(message));
     }
 
-    public void syncAndSaveMessage(String message) {
-        Message messageObj = new Message(message);
-        messageObj.setSynced(false);
-        messageObj.setChatBotName("Deeptimay");
-        Long id = messageDao.insert(messageObj);
-        messageObj.setId(id);
+    public void syncAndSaveMessage(Message message) {
+        Long id = messageDao.insert(message);
+        message.setId(id);
 
-        Call<ChatBotResponse> call = RetrofitClient.getInstance().getBotResponse(message);
+        Call<ChatBotResponse> call = RetrofitClient.getInstance().getBotResponse(message.getMessage(), message.getExternalID());
         call.enqueue(new Callback<ChatBotResponse>() {
             @Override
             public void onResponse(Call<ChatBotResponse> call, Response<ChatBotResponse> response) {
@@ -62,9 +76,12 @@ public class ChatRepository {
                 Observable.just("io")
                         .subscribeOn(Schedulers.io())
                         .subscribe(i -> {
-                            messageDao.insert(response.body().getMessage());
-                            messageObj.setSynced(true);
-                            messageDao.update(messageObj);
+                            Message messageResponse = response.body().getMessage();
+                            messageResponse.setExternalID(message.getExternalID());
+
+                            messageDao.insert(messageResponse);
+                            message.setSynced(true);
+                            messageDao.update(message);
                         });
 
             }
